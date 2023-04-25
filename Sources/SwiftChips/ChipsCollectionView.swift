@@ -8,12 +8,7 @@ import SwiftUI
 
 struct ChipsCollectionView: View {
     
-    @State private var chips = [
-        ChipData(text: "something longer", isSelected: false),
-        ChipData(text: "Lorem impsum", isSelected: false),
-        ChipData(text: "veeeeery ver", isSelected: false),
-        ChipData(text: "Andrea Ciani", isSelected: false),
-    ]
+    @Binding var chips: [ChipData]
     
     var body: some View {
         var width = CGFloat.zero
@@ -51,7 +46,15 @@ struct ChipsCollectionView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    
+    @State private static var chips = [
+        ChipData(text: "something longer", isSelected: false),
+        ChipData(text: "Lorem impsum", isSelected: false),
+        ChipData(text: "veeeeery ver", isSelected: false),
+        ChipData(text: "Andrea Ciani", isSelected: false),
+    ]
+    
     static var previews: some View {
-        ChipsCollectionView()
+        ChipsCollectionView(chips: $chips)
     }
 }
