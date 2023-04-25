@@ -10,10 +10,19 @@ public struct ChipData: Identifiable {
     public let id: String = UUID().uuidString
     public var text: String
     public var isSelected: Bool
+    
+    public init(text: String, isSelected: Bool) {
+        self.text = text
+        self.isSelected = isSelected
+    }
 }
 
 public struct ChipView: View {
     @Binding public var data: ChipData
+    
+    public init(data: Binding<ChipData>) {
+        self._data = data
+    }
     
     public var body: some View {
         Text(data.text)

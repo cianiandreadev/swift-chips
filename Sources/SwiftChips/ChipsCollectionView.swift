@@ -10,6 +10,10 @@ public struct ChipsCollectionView: View {
     
     @Binding public var chips: [ChipData]
     
+    public init(chips: Binding<[ChipData]>) {
+        self._chips = chips
+    }
+    
     public var body: some View {
         var width = CGFloat.zero
         var height = CGFloat.zero
