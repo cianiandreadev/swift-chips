@@ -6,11 +6,11 @@
 
 import SwiftUI
 
-public struct ChipsCollectionView: View {
+public struct ChipsCollectionView<D: ChipData>: View {
     
-    @Binding public var chips: [ChipData]
+    @Binding public var chips: [D]
     
-    public init(chips: Binding<[ChipData]>) {
+    public init(chips: Binding<[D]>) {
         self._chips = chips
     }
     
@@ -52,10 +52,10 @@ public struct ChipsCollectionView: View {
 struct ContentView_Previews: PreviewProvider {
     
     @State private static var chips = [
-        ChipData(text: "something longer", isSelected: false),
-        ChipData(text: "Lorem impsum", isSelected: false),
-        ChipData(text: "veeeeery ver", isSelected: false),
-        ChipData(text: "Andrea Ciani", isSelected: false),
+        ExampleChipData(text: "something longer", isSelected: false),
+        ExampleChipData(text: "Lorem impsum", isSelected: false),
+        ExampleChipData(text: "veeeeery ver", isSelected: false),
+        ExampleChipData(text: "Andrea Ciani", isSelected: false),
     ]
     
     static var previews: some View {

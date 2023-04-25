@@ -6,21 +6,16 @@
 
 import SwiftUI
 
-public struct ChipData: Identifiable {
-    public let id: String = UUID().uuidString
-    public var text: String
-    public var isSelected: Bool
-    
-    public init(text: String, isSelected: Bool) {
-        self.text = text
-        self.isSelected = isSelected
-    }
+public protocol ChipData: Identifiable {
+    var id: String { get }
+    var text: String { get set }
+    var isSelected: Bool { get set }
 }
 
-public struct ChipView: View {
-    @Binding public var data: ChipData
+public struct ChipView<D: ChipData>: View {
+    @Binding public var data: D
     
-    public init(data: Binding<ChipData>) {
+    public init(data: Binding<D>) {
         self._data = data
     }
     
@@ -42,11 +37,11 @@ public struct ChipView: View {
 
 struct ChipView_Previews: PreviewProvider {
     
-    @State private static var selectedChipState = ChipData(
+    @State private static var selectedChipState = ExampleChipData(
         text: "Selected Chip",
         isSelected: true)
     
-    @State private static var unselectedChipState = ChipData(
+    @State private static var unselectedChipState = ExampleChipData(
         text: "Selected Chip",
         isSelected: false)
     
