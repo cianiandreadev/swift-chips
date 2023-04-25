@@ -6,68 +6,22 @@
 
 import SwiftUI
 
-
-
-class ChipsViewModel: ObservableObject {
-    @Published var dataObject: [ChipsDataModel] = [ChipsDataModel.init(isSelected: false, systemImage: "pencil.circle", titleKey: "Pencil Circle")]
-    
-    func addChip() {
-        dataObject.append(ChipsDataModel.init(isSelected: false, systemImage: "pencil.circle", titleKey: "Pencil"))
-    }
-    
-    func removeLast() {
-        guard dataObject.count != 0 else {
-            return
-        }
-        dataObject.removeLast()
-    }
-}
-
 struct ChipsCollectionView: View {
     
-    @StateObject var viewModel = ChipsViewModel()
-    
-    var elements: [ChipsDataModel] = []
-    
-    var body: some View {
-        VStack {
-            ScrollView {
-                ChipsContent(viewModel: viewModel)
-            }
-            Spacer()
-            HStack {
-                Spacer()
-                Button("Remove Chips") {
-                    withAnimation {
-                        viewModel.removeLast()
-                    }
-                }.padding(.all, 40).accentColor(.red)
-                Spacer()
-                Button("Add Chips") {
-                    withAnimation {
-                        viewModel.addChip()
-                    }
-                }.padding(.all, 40)
-                Spacer()
-            }
-
-
-        }
-    }
-}
-
-struct ChipsContent: View {
-    @ObservedObject var viewModel = ChipsViewModel()
-    
-    @State private var chipData = ChipData(text: "Bla", isSelected: false)
+    @State private var chips = [
+        ChipData(text: "something longer", isSelected: false),
+        ChipData(text: "Lorem impsum", isSelected: false),
+        ChipData(text: "veeeeery ver", isSelected: false),
+        ChipData(text: "Andrea Ciani", isSelected: false),
+    ]
     
     var body: some View {
         var width = CGFloat.zero
         var height = CGFloat.zero
         return GeometryReader { geo in
-                ZStack(alignment: .topLeading, content: {
-                ForEach(viewModel.dataObject) { chipsData in
-                    ChipView(data: $chipData)
+            ZStack(alignment: .topLeading, content: {
+                ForEach(0 ..< chips.count) { i in
+                    ChipView(data: self.$chips[i])
                         .padding(.all, 5)
                         .alignmentGuide(.leading) { dimension in
                             if (abs(width - dimension.width) > geo.size.width) {
@@ -76,16 +30,16 @@ struct ChipsContent: View {
                             }
                             
                             let result = width
-                            if chipsData.id == viewModel.dataObject.last!.id {
+                            if self.$chips[i].id == self.$chips.last!.id {
                                 width = 0
                             } else {
                                 width -= dimension.width
                             }
                             return result
-                          }
+                        }
                         .alignmentGuide(.top) { dimension in
                             let result = height
-                            if chipsData.id == viewModel.dataObject.last!.id {
+                            if self.$chips[i].id == self.$chips.last!.id {
                                 height = 0
                             }
                             return result
