@@ -19,7 +19,7 @@ public struct ChipsCollectionView<D: ChipData>: View {
         var height = CGFloat.zero
         return GeometryReader { geo in
             ZStack(alignment: .topLeading, content: {
-                ForEach(0 ..< chips.count) { i in
+                ForEach(0 ..< $chips.count, id: \.self) { i in
                     ChipView(data: self.$chips[i])
                         .padding(.all, 5)
                         .alignmentGuide(.leading) { dimension in
