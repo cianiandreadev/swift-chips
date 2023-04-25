@@ -6,16 +6,16 @@
 
 import SwiftUI
 
-struct ChipData: Identifiable {
-    let id: String = UUID().uuidString
-    var text: String
-    var isSelected: Bool
+public struct ChipData: Identifiable {
+    public let id: String = UUID().uuidString
+    public var text: String
+    public var isSelected: Bool
 }
 
-struct ChipView: View {
-    @Binding var data: ChipData
+public struct ChipView: View {
+    @Binding public var data: ChipData
     
-    var body: some View {
+    public var body: some View {
         Text(data.text)
             .font(.system(size: 14))
             .padding(.horizontal, 10)

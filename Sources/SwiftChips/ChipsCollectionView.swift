@@ -6,11 +6,11 @@
 
 import SwiftUI
 
-struct ChipsCollectionView: View {
+public struct ChipsCollectionView: View {
     
-    @Binding var chips: [ChipData]
+    @Binding public var chips: [ChipData]
     
-    var body: some View {
+    public var body: some View {
         var width = CGFloat.zero
         var height = CGFloat.zero
         return GeometryReader { geo in
