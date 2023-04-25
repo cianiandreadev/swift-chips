@@ -6,12 +6,6 @@
 
 import SwiftUI
 
-public protocol ChipData: Identifiable {
-    var id: String { get }
-    var text: String { get set }
-    var isSelected: Bool { get set }
-}
-
 public struct ChipView<D: ChipData>: View {
     @Binding public var data: D
     
