@@ -9,6 +9,6 @@ import Foundation
 
 public protocol ChipData: Identifiable {
     var id: String { get }
-    var text: String { get set }
+    var text: String { get }
     var isSelected: Bool { get set }
 }
