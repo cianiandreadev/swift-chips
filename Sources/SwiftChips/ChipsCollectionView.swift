@@ -45,7 +45,7 @@ public struct ChipsCollectionView<D: ChipData>: View {
                         }
                 }
             })
-        }.padding(.all, 10)
+        }
     }
 }
 
