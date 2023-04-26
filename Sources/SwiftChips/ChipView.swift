@@ -6,14 +6,12 @@
 
 import SwiftUI
 
-public struct ChipView<D: ChipData>: View {
-    @Binding public var data: D
+struct ChipView<D: ChipData>: View {
+    @Binding var data: D
     
-    public init(data: Binding<D>) {
-        self._data = data
-    }
+    var onTap: (Bool) -> ()
     
-    public var body: some View {
+    var body: some View {
         Text(data.text)
             .font(.system(size: 14))
             .padding(.horizontal, 10)
@@ -24,6 +22,7 @@ public struct ChipView<D: ChipData>: View {
             .animation(.spring(), value: data.isSelected)
             .onTapGesture {
                 data.isSelected.toggle()
+                onTap(data.isSelected)
             }
     }
 }
@@ -40,11 +39,11 @@ struct ChipView_Previews: PreviewProvider {
         isSelected: false)
     
     static var previews: some View {
-        ChipView(data: $selectedChipState)
+        ChipView(data: $selectedChipState, onTap: { _ in })
             .previewLayout(.sizeThatFits)
             .previewDisplayName("Selected")
         
-        ChipView(data: $unselectedChipState)
+        ChipView(data: $unselectedChipState, onTap: { _ in })
             .previewLayout(.sizeThatFits)
             .previewDisplayName("Unselected")
     }
