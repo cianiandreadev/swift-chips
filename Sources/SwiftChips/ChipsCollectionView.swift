@@ -11,6 +11,7 @@ public struct ChipsCollectionView<D: ChipData>: View {
     @Binding public var chips: [D]
     
     public var workingMode: WorkingMode
+    public var accentColor: Color = .accentColor
     
     public init(chips: Binding<[D]>, mode: WorkingMode = .multipleSelection) {
         self._chips = chips
@@ -23,13 +24,7 @@ public struct ChipsCollectionView<D: ChipData>: View {
         return GeometryReader { geo in
             ZStack(alignment: .topLeading, content: {
                 ForEach(0 ..< $chips.count, id: \.self) { i in
-                    ChipView(data: self.$chips[i]) { selected in
-                        if workingMode == .singleSelection && selected {
-                            for (index,_) in self.chips.enumerated() where index != i {
-                                self.chips[index].isSelected = false
-                            }
-                        }
-                    }
+                    buildChipView(at: i)
                         .padding(.all, 5)
                         .alignmentGuide(.leading) { dimension in
                             if (abs(width - dimension.width) > geo.size.width) {
@@ -54,8 +49,39 @@ public struct ChipsCollectionView<D: ChipData>: View {
                         }
                 }
             })
-        }
+        }.environment(\.accentColor, accentColor)
     }
+    
+    // Used for single selection an multiple selection
+    @ViewBuilder
+    private func buildChipView(at i: Int) -> some View {
+        switch workingMode {
+        case .singleSelection, .multipleSelection:
+            ChipView(data: self.$chips[i]) { data in
+                if workingMode == .singleSelection && data.isSelected {
+                    for (index, item) in self.chips.enumerated() where index != i && item.isSelected {
+                        // where isSelected reduce the callbacks to the binding object state to
+                        // only the object that need to be changed
+                        self.chips[index].isSelected = false
+                    }
+                }
+            }
+        case .deletable:
+            DeletableChipView(data: self.$chips[i]) { data in
+                withAnimation {
+                    self.$chips.wrappedValue = self.$chips.wrappedValue.filter { $0.id != data.id }
+                }
+            }
+        }
+        
+    }
+    
+    // Used only for deletable mode
+    @ViewBuilder
+    private func builddDeletableChipView(at i: Int) -> some View {
+        
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

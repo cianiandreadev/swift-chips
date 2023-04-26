@@ -9,7 +9,9 @@ import SwiftUI
 struct ChipView<D: ChipData>: View {
     @Binding var data: D
     
-    var onTap: (Bool) -> ()
+    var onTap: (D) -> ()
+    
+    @Environment(\.accentColor) var userAccentColor
     
     var body: some View {
         Text(data.text)
@@ -17,12 +19,12 @@ struct ChipView<D: ChipData>: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 5)
             .foregroundColor(data.isSelected ? .white : .black)
-            .background(data.isSelected ? Color.blue : Color.gray.opacity(0.3))
+            .background(data.isSelected ? userAccentColor : Color.gray.opacity(0.3))
             .cornerRadius(20)
             .animation(.spring(), value: data.isSelected)
             .onTapGesture {
                 data.isSelected.toggle()
-                onTap(data.isSelected)
+                onTap(data)
             }
     }
 }
