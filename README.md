@@ -36,6 +36,10 @@ WIP a detailed guide
 2. Add `https://github.com/cianiandreadev/swift-chips`
 3. Select "Up to Next Major" with `0.1.0`
 
+
+[license-image]: http://img.shields.io/badge/license-MIT-000000.svg?style=flat-square
+[license-url]: LICENSE.md
+
 ## Known Bugs
 
 - Currently the wrapper of the chips do not layout the vertical height correctly. _workaround_ add a `.padding` on the bottom
