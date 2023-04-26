@@ -10,8 +10,11 @@ public struct ChipsCollectionView<D: ChipData>: View {
     
     @Binding public var chips: [D]
     
-    public init(chips: Binding<[D]>) {
+    public var workingMode: WorkingMode
+    
+    public init(chips: Binding<[D]>, mode: WorkingMode = .multipleSelection) {
         self._chips = chips
+        self.workingMode = mode
     }
     
     public var body: some View {
@@ -20,7 +23,13 @@ public struct ChipsCollectionView<D: ChipData>: View {
         return GeometryReader { geo in
             ZStack(alignment: .topLeading, content: {
                 ForEach(0 ..< $chips.count, id: \.self) { i in
-                    ChipView(data: self.$chips[i])
+                    ChipView(data: self.$chips[i]) { selected in
+                        if workingMode == .singleSelection && selected {
+                            for (index,_) in self.chips.enumerated() where index != i {
+                                self.chips[index].isSelected = false
+                            }
+                        }
+                    }
                         .padding(.all, 5)
                         .alignmentGuide(.leading) { dimension in
                             if (abs(width - dimension.width) > geo.size.width) {
