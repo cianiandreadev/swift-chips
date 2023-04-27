@@ -13,9 +13,10 @@ public struct ChipsCollectionView<D: ChipData>: View {
     public var workingMode: WorkingMode
     public var accentColor: Color = .accentColor
     
-    public init(chips: Binding<[D]>, mode: WorkingMode = .multipleSelection) {
+    public init(chips: Binding<[D]>, mode: WorkingMode = .multipleSelection, accentColor: Color = .accentColor) {
         self._chips = chips
         self.workingMode = mode
+        self.accentColor = accentColor
     }
     
     public var body: some View {
@@ -87,10 +88,13 @@ public struct ChipsCollectionView<D: ChipData>: View {
 struct ContentView_Previews: PreviewProvider {
     
     @State private static var chips = [
-        ExampleChipData(text: "something longer", isSelected: false),
+        ExampleChipData(text: "Lorem", isSelected: false),
         ExampleChipData(text: "Lorem impsum", isSelected: false),
-        ExampleChipData(text: "veeeeery ver", isSelected: false),
-        ExampleChipData(text: "Andrea Ciani", isSelected: false),
+        ExampleChipData(text: "dolor sit amet", isSelected: false),
+        ExampleChipData(text: "consectetur", isSelected: false),
+        ExampleChipData(text: "adipiscing", isSelected: false),
+        ExampleChipData(text: "elit", isSelected: false),
+        ExampleChipData(text: "sed", isSelected: false),
     ]
     
     static var previews: some View {
